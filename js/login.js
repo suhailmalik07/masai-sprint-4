@@ -9,14 +9,14 @@ function login() {
     var email = data.get('email')
     var password = data.get('password')
 
-    var currUser = user.get(email)
+    var currUser = User.get(email)
 
     if (!currUser || (currUser.password != password)) {
         renderError()
         return
     }
 
-    logged.create(currUser)
+    Logged.create(currUser)
     location.href = 'index.html'
 }
 

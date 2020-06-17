@@ -104,8 +104,8 @@ function LoggedDB() {
 
     this.init = function () {
         var res = localStorage.getItem('Logged')
-        if (!res) {
-            this.updateDB([])
+        if (!res) { 
+            this.updateDB({})
         }
     }
 
@@ -126,6 +126,6 @@ LoggedDB.prototype.create = function (item) {
 
 
 var Restaurent = new RestaurentDB()
-var user = new UserDB()
-var logged = new LoggedDB()
+var User = new UserDB()
+var Logged = new LoggedDB()
 

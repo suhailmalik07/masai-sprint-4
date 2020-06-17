@@ -8,10 +8,10 @@ function register() {
     var data = new FormData(event.target)
     var email = data.get('email')
     var password = data.get('password')
-    var isAdmin = data.get('isAdmin')
+    var isAdmin = data.get('isAdmin') && true
 
     console.log(email, password, isAdmin)
-    var tmp = user.create({
+    var tmp = User.create({
         email,
         password,
         isAdmin
