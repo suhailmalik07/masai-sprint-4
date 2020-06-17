@@ -55,7 +55,6 @@ RestaurentDB.prototype.update = function (id, data) {
     }
 }
 
-
 function UserDB() {
     this.db = localStorage
 
@@ -90,17 +89,43 @@ UserDB.prototype.create = function (item) {
     return id
 }
 
-UserDB.prototype.get = function (id) {
+UserDB.prototype.get = function (email) {
     var Users = this.all()
 
     for (var i = 0; i < Users.length; i++) {
-        if (Users[i].id == id) {
+        if (Users[i].email == email) {
             return Users[i]
         }
     }
 }
 
+function LoggedDB() {
+    this.db = localStorage
+
+    this.init = function () {
+        var res = localStorage.getItem('Logged')
+        if (!res) {
+            this.updateDB([])
+        }
+    }
+
+    this.updateDB = function (data) {
+        this.db.setItem('Logged', JSON.stringify(data))
+    }
+}
+
+LoggedDB.prototype.get = function () {
+    this.init()
+    return JSON.parse(this.db.getItem('Logged'))
+}
+
+LoggedDB.prototype.create = function (item) {
+    this.init()
+    this.updateDB(item)
+}
+
 
 var Restaurent = new RestaurentDB()
 var user = new UserDB()
+var logged = new LoggedDB()
 
