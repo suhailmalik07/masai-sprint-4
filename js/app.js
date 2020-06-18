@@ -104,7 +104,7 @@ function LoggedDB() {
 
     this.init = function () {
         var res = localStorage.getItem('Logged')
-        if (!res) { 
+        if (!res) {
             this.updateDB({})
         }
     }
@@ -124,8 +124,56 @@ LoggedDB.prototype.create = function (item) {
     this.updateDB(item)
 }
 
+LoggedDB.prototype.delete = function () {
+    this.init()
+    this.updateDB({})
+}
+
 
 var Restaurent = new RestaurentDB()
 var User = new UserDB()
 var Logged = new LoggedDB()
 
+function isAdmin() {
+    var user = Logged.get()
+    return user.isAdmin == true
+}
+
+function isUser() {
+    var user = Logged.get()
+    return user
+}
+
+
+// user name and email according to user logged in or not in navigation bar
+function renderNavAtoUser() {
+    var target = document.getElementById('navDiv')
+
+    var a = document.createElement('a')
+    var a2 = document.createElement('a')
+    var user = isUser()
+
+    var frag = document.createDocumentFragment()
+
+    if (user.isAdmin == true) {
+        var t = document.createElement('a')
+        t.href = 'admin.html'
+        t.className = "text-white text-decoration-none mr-4"
+        t.innerText = 'Admin Panel'
+        frag.appendChild(t)
+    }
+
+    if (user.email) {
+        target.innerHTML = ""
+
+        a.href = "#"
+        a.innerText = user.email.split('@')[0]
+        a.className = "text-white text-decoration-none mr-4"
+
+        a2.href = 'logout.html'
+        a2.innerText = 'Log out'
+        a2.className = "text-white text-decoration-none"
+        frag.append(a, a2)
+    }
+    target.appendChild(frag)
+}

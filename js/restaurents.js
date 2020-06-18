@@ -1,23 +1,8 @@
 window.onload = function () {
-    if (!isAdmin()) {
-        location.href = '../index.html'
-    }
-
-    this.document.getElementById('addRestaurentForm').addEventListener('submit', this.addRestaurent)
     this.renderDOM()
+    this.renderNavAtoUser()
 }
 
-function addRestaurent() {
-    event.preventDefault()
-    var formData = new FormData(event.target)
-
-    var data = {}
-    formData.forEach(function (value, key) {
-        data[key] = value
-    })
-    Restaurent.create(data)
-    renderDOM()
-}
 
 function renderDOM() {
     var res = Restaurent.all().reverse()
