@@ -132,13 +132,16 @@ function changePage() {
 
 function createCartModel() {
     var target = document.getElementById('cartItems')
+    target.innerHTML = ""
     var frag = document.createDocumentFragment()
 
     var items = Cart.all()
     var totalBill = 0
 
     if (items.length == 0) {
-        document.getElementById('orderBtn').className += '  disabled'
+        document.getElementById('orderBtn').className += 'disabled'
+    } else {
+        document.getElementById('orderBtn').className += 'block'
     }
 
     for (var i = 0; i < items.length; i++) {
@@ -195,6 +198,7 @@ function addToCart() {
             flag = false
             Cart.updateDB(cartAll)
             renderNavAtoUser()
+            createCartModel()
             return
         }
     }
@@ -204,10 +208,10 @@ function addToCart() {
         dish.cartId = Number(dishID)
         Cart.create(dish)
         renderNavAtoUser()
+        createCartModel()
         return
     }
     console.log(dishID)
-
 }
 
 function clearCart() {
