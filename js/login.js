@@ -25,5 +25,5 @@ function login() {
 }
 
 function renderError(a) {
-    console.log('user not found')
+    alert('user not found with this mail or password!')
 }
