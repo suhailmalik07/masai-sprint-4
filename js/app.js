@@ -177,3 +177,54 @@ function renderNavAtoUser() {
     }
     target.appendChild(frag)
 }
+
+// create restaurent CARD
+function createRestaurentCard(res) {
+    var cont = document.createElement('div')
+    cont.className = 'col-12 col-md-6 col-lg-6'
+
+    var t = '<div class="card mb-3 shadow-sm">' +
+        '<div class="row no-gutters">' +
+        '<div class="col-md-4">' +
+        '<img src="http://via.placeholder.com/120" class="card-img" alt="...">' +
+        '</div>' +
+        '<div class="col-md-8">' +
+        '<div class="card-body">' +
+        '<h5 class="card-title mb-1"><a href="#">' + res.name + '</a></h5>'
+
+    if (res.type == 'veg') {
+        t += '<p class="card-text mb-1 text-success"><span>&#8226;</span> Veg</p>'
+    } else {
+        t += '<p class="card-text mb-1 text-danger"><span>&#8226;</span> Non-Veg</p>'
+    }
+    t += '<p class="card-text"><small class="text-muted">Naya Gaav, Delhi</small></p>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+
+    cont.innerHTML = t
+    return cont
+}
+
+function createPagination(page, totalPage) {
+    // <li class="page-item"><a class="page-link" href="#">1</a></li>
+    var frag = document.createDocumentFragment()
+    for (var i = 1; i <= totalPage; i++) {
+        var li = document.createElement('li')
+        li.className = 'page-item'
+
+        var a = document.createElement('span')
+        a.className = 'page-link'
+        a.innerText = i
+        a.id = i
+
+        if (page == i) {
+            li.className = 'page-item active'
+        }
+
+        li.appendChild(a)
+        frag.appendChild(li)
+    }
+    return frag
+}
