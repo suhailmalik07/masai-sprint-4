@@ -170,7 +170,7 @@ function createCartModel() {
 function addToCart() {
     // console.log('yes')
     if (!isUser) {
-        return
+        alert('You must LogIn First!')
     }
     var dishID = Number(event.target.parentElement.parentElement.parentElement.id)
     var qty = Number(event.target.value)
