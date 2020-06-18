@@ -2,6 +2,8 @@ window.onload = function () {
     var items = Cart.all()
     if (items.length == 0) {
         location.href = 'restaurents.html'
+    } else if (!this.isUser) {
+        location.href = 'login.html'
     } else {
         order()
     }

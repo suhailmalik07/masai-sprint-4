@@ -12,6 +12,7 @@ function isDetailorList() {
     var id = Number(tmp.get('restaurent'))
     if (id) {
         renderRestaurentPage(id)
+        document.getElementById('searchBar').style.display = 'none'
     } else {
         renderDOM()
     }

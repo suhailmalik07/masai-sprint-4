@@ -27,6 +27,11 @@ function createOrderCart(items) {
     var ul = document.createElement('ul')
     var totalBill = 0
 
+    var resName = document.createElement('li')
+    resName.className = "bg-dark text-white p-2"
+    resName.innerText = Restaurent.get(items[0].resID || 14).name
+    ul.appendChild(resName)
+
     for (var i = 0; i < items.length; i++) {
         var itemPriceTotal = items[i].qty * items[i].price
         var elem = document.createElement('li')
