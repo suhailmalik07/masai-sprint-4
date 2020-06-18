@@ -4,6 +4,7 @@ window.onload = function () {
     }
 
     this.document.getElementById('addRestaurentForm').addEventListener('submit', this.addRestaurent)
+    this.document.getElementById('paginationUL').addEventListener('click', changePage)
     this.renderDOM()
 }
 
@@ -19,9 +20,17 @@ function addRestaurent() {
     renderDOM()
 }
 
-function renderDOM() {
+function renderDOM(page) {
+    var page = page || 1
+    // render restaurents
     var res = Restaurent.all().reverse()
-    renderRestaurents(res)
+    renderRestaurents(res.slice((page - 1) * 10, page * 10))
+
+
+    // render Pagination
+    var totalPage = Math.ceil(res.length / 10)
+    var pagination = createPagination(page, totalPage)
+    renderPagination(pagination)
 }
 
 function renderRestaurents(res) {
@@ -35,4 +44,19 @@ function renderRestaurents(res) {
         row.appendChild(card)
     }
     target.appendChild(row)
+}
+
+function renderPagination(pagination) {
+    var target = document.getElementById('paginationUL')
+    target.innerHTML = ""
+    target.appendChild(pagination)
+
+}
+
+
+
+function changePage() {
+    if (Number(event.target.id)) {
+        renderDOM(Number(event.target.id))
+    }
 }
