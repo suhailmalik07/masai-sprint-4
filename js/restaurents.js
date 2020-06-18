@@ -137,7 +137,7 @@ function createCartModel() {
     var items = Cart.all()
     var totalBill = 0
 
-    if (items.length == 0){
+    if (items.length == 0) {
         document.getElementById('orderBtn').className += '  disabled'
     }
 
@@ -169,6 +169,9 @@ function createCartModel() {
 
 function addToCart() {
     // console.log('yes')
+    if (!isUser) {
+        return
+    }
     var dishID = Number(event.target.parentElement.parentElement.parentElement.id)
     var qty = Number(event.target.value)
 
@@ -187,7 +190,7 @@ function addToCart() {
     for (var i = 0; i < cartAll.length; i++) {
         var item = cartAll[i]
         if (item.cartId == dishID) {
-            item.qty = qty  
+            item.qty = qty
             cartAll[i] = item
             flag = false
             Cart.updateDB(cartAll)
