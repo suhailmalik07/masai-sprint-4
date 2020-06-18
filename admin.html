@@ -32,35 +32,17 @@
                 </li>
             </ul>
         </div>
-        <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#staticBackdrop">Add</button>
-        <a href="logout.html" class="text-white text-decoration-none">Log Out</a>
+
+        <div id="navDiv">
+            <button type="button" class="btn btn-primary mr-4" id="addBtn" data-toggle="modal"
+                data-target="#staticBackdrop">Add</button>
+            <a href="logout.html" class="text-white text-decoration-none">Log Out</a>
+        </div>
 
     </nav>
 
-    <div class="container mt-4">
+    <div class="container my-4">
         <div class="res" id="res">
-            <div class="row">
-                <!-- card 1 -->
-                
-
-                <!-- card 2 -->
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="http://via.placeholder.com/120" class="card-img" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-1"><a href="#">Veere di dhaba</a></h5>
-                                    <p class="card-text mb-1 text-danger"><span>&#8226;</span> Non-Veg</p>
-                                    <p class="card-text"><small class="text-muted">Naya Gaav, Delhi</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
@@ -68,17 +50,18 @@
         <div class="paginationMY">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center" id="paginationUL">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
                 </ul>
             </nav>
+        </div>
+
+        <div class="restaurent" id="restaurent">
+            <div class="row" id="restaurentDetails">
+                
+            </div>
+            <hr>
+            <div class="row" id="dishes">
+                
+            </div>
         </div>
     </div>
 
@@ -140,6 +123,59 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add dish -->
+    <div class="modal fade" id="addDishModel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="AddDishModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add Dish</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDishForm">
+                        <div class="form-group">
+                            <label for="name">Dish Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+
+                        <!-- Veg or NOnveg -->
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="veg"
+                                    checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Veg
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="exampleRadios2"
+                                    value="non-Veg">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Non-Veg
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" id="price" name="price">
+                        </div>
+
+                        <!-- Details -->
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
                 </div>
             </div>
         </div>

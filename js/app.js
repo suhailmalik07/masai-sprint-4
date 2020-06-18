@@ -190,7 +190,7 @@ function createRestaurentCard(res) {
         '</div>' +
         '<div class="col-md-8">' +
         '<div class="card-body">' +
-        '<h5 class="card-title mb-1"><a href="#">' + res.name + '</a></h5>'
+        `<h5 class="card-title mb-1"><a class='text-dark' href="?restaurent=${res.id}"> ${res.name} </a></h5>`
 
     if (res.type == 'veg') {
         t += '<p class="card-text mb-1 text-success"><span>&#8226;</span> Veg</p>'
