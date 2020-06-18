@@ -4,6 +4,7 @@ window.onload = function () {
     this.createCartModel()
 
     this.document.getElementById('paginationUL').addEventListener('click', changePage)
+    this.document.getElementById('clearCartBtn').addEventListener('click', clearCart)
 }
 
 function isDetailorList() {
@@ -57,20 +58,21 @@ function createRestaurentPage(res) {
     return card
 }
 
-
 function createDishesPage(res) {
     var row = document.createElement('div')
     row.className = 'row'
+    row.id = 'dishes'
+    row.addEventListener('change', addToCart)
     for (var i = 0; i < res.length; i++) {
         var card = document.createElement('div')
         card.className = "col-12 col-md-6 col-lg-4 mt-2 mt-lg-4"
 
         var t =
-            '<div class="card">' +
+            `<div class="card" id=${i}>` +
             '<div class="d-flex flex-md-column">' +
             '<img src="http://via.placeholder.com/240x180" class="img-fluid" alt="...">' +
             '<div class="card-body">' +
-            `<h5 class="card-title">${res[i].name}</h5>`
+            `<h5 class="card-title" id="dish-name">${res[i].name}</h5>`
         if (res[i].type == 'veg') {
             t += '<small class="bg-success p-1 px-3 rounded-pill">Veg</small><br>'
         } else {
@@ -127,6 +129,79 @@ function changePage() {
     }
 }
 
-function createCartModel(){
-    
+function createCartModel() {
+    var target = document.getElementById('cartItems')
+    var frag = document.createDocumentFragment()
+
+    var items = Cart.all()
+    var totalBill = 0
+
+    for (var i = 0; i < items.length; i++) {
+        var itemPriceTotal = items[i].qty * items[i].price
+        var elem = document.createElement('li')
+        elem.className = 'list-group-item d-flex justify-content-between'
+
+
+        var t = `<span>${items[i].name} <span class="text-muted ml-2">${items[i].qty}</span></span>` +
+            `<span class="text-success text-right font-weight-bold">$ ${itemPriceTotal}</span>`
+
+        elem.innerHTML = t
+        frag.appendChild(elem, document.createElement('hr'))
+        totalBill += itemPriceTotal
+
+    }
+    var total = document.createElement('li')
+    total.className = "list-group-item d-flex justify-content-between"
+    var t = `<span>Total </span> <span
+            class="text-success text-right font-weight-bold">$ ${totalBill}</span>`
+    total.innerHTML = t
+
+    frag.appendChild(total)
+    target.appendChild(frag)
+}
+
+
+
+function addToCart() {
+    // console.log('yes')
+    var dishID = Number(event.target.parentElement.parentElement.parentElement.id)
+    var qty = Number(event.target.value)
+
+
+    var tmp = new URLSearchParams(location.search)
+    var resID = Number(tmp.get('restaurent'))
+
+
+    var dishes = Restaurent.get(resID).dishes
+    var dish = dishes[dishID]
+
+
+    var cartAll = Cart.all()
+
+    var flag = true
+    for (var i = 0; i < cartAll.length; i++) {
+        var item = cartAll[i]
+        if (item.cartId == dishID) {
+            item.qty = qty  
+            cartAll[i] = item
+            flag = false
+            Cart.updateDB(cartAll)
+            renderNavAtoUser()
+            return
+        }
+    }
+    if (flag) {
+        dish.qty = qty
+        dish.cartId = Number(dishID)
+        Cart.create(dish)
+        renderNavAtoUser()
+        return
+    }
+    console.log(dishID)
+
+}
+
+function clearCart() {
+    Cart.updateDB([])
+    location.reload()
 }

@@ -147,7 +147,10 @@ function renderNavAtoUser() {
         cart.className = 'btn text-decoration-none text-white mr-4'
         cart.setAttribute('data-toggle', 'modal')
         cart.setAttribute('data-target', '#cartModal')
-        cart.innerHTML = 'Cart ' + `<span class="badge badge-pill badge-primary">${Cart.all().length || 0}</span>`
+        var totalItem = Cart.all().reduce(function(a, c){
+            return a + c.qty
+        }, 0)
+        cart.innerHTML = 'Cart ' + `<span class="badge badge-pill badge-primary">${totalItem}</span>`
 
 
 
