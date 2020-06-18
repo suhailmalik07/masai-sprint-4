@@ -9,7 +9,7 @@ function login() {
     var email = data.get('email')
     var password = data.get('password')
 
-    var currUser = User.get(id=0, email=email)
+    var currUser = User.get(id = 0, email = email)
     console.log(currUser)
 
     if (!currUser || (currUser.password != password)) {
@@ -18,6 +18,9 @@ function login() {
     }
 
     Logged.create(currUser)
+    if (currUser.isAdmin) {
+        location.href = 'admin.html'
+    }
     location.href = 'index.html'
 }
 
