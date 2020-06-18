@@ -44,5 +44,7 @@ function order() {
     User.updateDB(users)
     Cart.updateDB([])
 
-    // location.href = 'orders.html'
+    setTimeout(function () {
+        location.href = 'orders.html'
+    }, 1000)
 }
