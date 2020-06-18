@@ -21,7 +21,7 @@ function login() {
     if (currUser.isAdmin) {
         location.href = 'admin.html'
     }
-    location.href = 'index.html'
+    location.href = 'restaurents.html'
 }
 
 function renderError(a) {

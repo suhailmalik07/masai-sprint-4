@@ -136,6 +136,10 @@ function createCartModel() {
     var items = Cart.all()
     var totalBill = 0
 
+    if (items.length == 0){
+        document.getElementById('orderBtn').className += '  disabled'
+    }
+
     for (var i = 0; i < items.length; i++) {
         var itemPriceTotal = items[i].qty * items[i].price
         var elem = document.createElement('li')
@@ -192,6 +196,7 @@ function addToCart() {
     }
     if (flag) {
         dish.qty = qty
+        dish.resID = resID
         dish.cartId = Number(dishID)
         Cart.create(dish)
         renderNavAtoUser()
