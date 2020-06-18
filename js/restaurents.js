@@ -1,6 +1,7 @@
 window.onload = function () {
     this.isDetailorList()
     this.renderNavAtoUser()
+    this.createCartModel()
 
     this.document.getElementById('paginationUL').addEventListener('click', changePage)
 }
@@ -24,7 +25,6 @@ function renderRestaurentPage(id) {
     var page = createRestaurentPage(res)
     target.appendChild(page)
     if (res.dishes) {
-        // console.log(res.dishes)
         var dishes = createDishesPage(res.dishes)
         target.appendChild(dishes)
     }
@@ -125,4 +125,8 @@ function changePage() {
     if (Number(event.target.id)) {
         renderDOM(Number(event.target.id))
     }
+}
+
+function createCartModel(){
+    
 }

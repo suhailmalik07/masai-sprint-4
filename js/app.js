@@ -104,7 +104,9 @@ SingleDB.prototype.delete = function () {
 var Restaurent = new DB('Restaurent')
 var User = new DB('Users')
 var Logged = new SingleDB('Logged')
-var Cart = new SingleDB('Cart')
+var Cart = new DB('Cart')
+
+
 
 function isAdmin() {
     var user = Logged.get()
@@ -115,7 +117,6 @@ function isUser() {
     var user = Logged.get()
     return user
 }
-
 
 // user name and email according to user logged in or not in navigation bar
 function renderNavAtoUser() {
@@ -142,10 +143,18 @@ function renderNavAtoUser() {
         a.innerText = 'Hi! ' + user.email.split('@')[0]
         a.className = "text-white text-decoration-none mr-4"
 
+        var cart = document.createElement('a')
+        cart.className = 'btn text-decoration-none text-white mr-4'
+        cart.setAttribute('data-toggle', 'modal')
+        cart.setAttribute('data-target', '#cartModal')
+        cart.innerHTML = 'Cart ' + `<span class="badge badge-pill badge-primary">${Cart.all().length || 0}</span>`
+
+
+
         a2.href = 'logout.html'
         a2.innerText = 'Log out'
         a2.className = "text-white text-decoration-none"
-        frag.append(a, a2)
+        frag.append(a, cart, a2)
     }
     target.appendChild(frag)
 }
