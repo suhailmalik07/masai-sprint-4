@@ -9,7 +9,8 @@ function login() {
     var email = data.get('email')
     var password = data.get('password')
 
-    var currUser = User.get(email)
+    var currUser = User.get(id=0, email=email)
+    console.log(currUser)
 
     if (!currUser || (currUser.password != password)) {
         renderError()

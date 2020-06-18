@@ -1,8 +1,27 @@
 window.onload = function () {
-    this.renderDOM()
+    this.isDetailorList()
     this.renderNavAtoUser()
 
     this.document.getElementById('paginationUL').addEventListener('click', changePage)
+}
+
+function isDetailorList() {
+    var tmp = new URLSearchParams(location.search)
+    var id = Number(tmp.get('restaurent'))
+    if (id) {
+        renderRestaurentPage(id)
+    } else {
+        renderDOM()
+    }
+}
+
+function renderRestaurentPage(id) {
+    var res = Restaurent.get(id)
+    console.log(res)
+}
+
+function restaurentPage(res){
+    
 }
 
 
@@ -30,34 +49,6 @@ function renderRestaurents(res) {
         row.appendChild(card)
     }
     target.appendChild(row)
-}
-
-function createRestaurentCard(res) {
-    var cont = document.createElement('div')
-    cont.className = 'col-12 col-md-6 col-lg-6'
-
-    var t = '<div class="card mb-3 shadow-sm">' +
-        '<div class="row no-gutters">' +
-        '<div class="col-md-4">' +
-        '<img src="http://via.placeholder.com/120" class="card-img" alt="...">' +
-        '</div>' +
-        '<div class="col-md-8">' +
-        '<div class="card-body">' +
-        '<h5 class="card-title mb-1"><a href="#">' + res.name + '</a></h5>'
-
-    if (res.type == 'veg') {
-        t += '<p class="card-text mb-1 text-success"><span>&#8226;</span> Veg</p>'
-    } else {
-        t += '<p class="card-text mb-1 text-danger"><span>&#8226;</span> Non-Veg</p>'
-    }
-    t += '<p class="card-text"><small class="text-muted">Naya Gaav, Delhi</small></p>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>'
-
-    cont.innerHTML = t
-    return cont
 }
 
 function renderPagination(pagination) {

@@ -1,24 +1,25 @@
-function RestaurentDB() {
+function DB(name) {
     this.db = localStorage
+    this.name = name
 
     this.init = function () {
-        var res = localStorage.getItem('Restaurent')
+        var res = localStorage.getItem(this.name)
         if (!res) {
             this.updateDB([])
         }
     }
 
     this.updateDB = function (data) {
-        this.db.setItem('Restaurent', JSON.stringify(data))
+        this.db.setItem(this.name, JSON.stringify(data))
     }
 
     this.all = function () {
         this.init()
-        return JSON.parse(this.db.getItem('Restaurent'))
+        return JSON.parse(this.db.getItem(this.name))
     }
 }
 
-RestaurentDB.prototype.create = function (item) {
+DB.prototype.create = function (item) {
     var Restaurents = this.all()
     if (Restaurents.length > 0) {
         var lastID = Restaurents[Restaurents.length - 1]['id']
@@ -32,17 +33,30 @@ RestaurentDB.prototype.create = function (item) {
     return id
 }
 
-RestaurentDB.prototype.get = function (id) {
+DB.prototype.get = function (id, email) {
     var restaurents = this.all()
 
-    for (var i = 0; i < restaurents.length; i++) {
-        if (restaurents[i].id == id) {
-            return restaurents[i]
+    if (id) {
+        for (var i = 0; i < restaurents.length; i++) {
+            if (restaurents[i].id == id) {
+                return restaurents[i]
+            }
         }
     }
+    if (email) {
+        // console.log('ey')
+        // console.log(restaurents)
+        for (var i = 0; i < restaurents.length; i++) {
+            // console.log(restaurents[i])
+            if (restaurents[i].email == email) {
+                return restaurents[i]
+            }
+        }
+    }
+
 }
 
-RestaurentDB.prototype.update = function (id, data) {
+DB.prototype.update = function (id, data) {
     var res = this.all()
 
     for (var i = 0; i < res.length; i++) {
@@ -55,84 +69,42 @@ RestaurentDB.prototype.update = function (id, data) {
     }
 }
 
-function UserDB() {
+function SingleDB(name) {
     this.db = localStorage
+    this.name = name
 
     this.init = function () {
-        var res = localStorage.getItem('Users')
-        if (!res) {
-            this.updateDB([])
-        }
-    }
-
-    this.updateDB = function (data) {
-        this.db.setItem('Users', JSON.stringify(data))
-    }
-
-    this.all = function () {
-        this.init()
-        return JSON.parse(this.db.getItem('Users'))
-    }
-}
-
-UserDB.prototype.create = function (item) {
-    var Users = this.all()
-    if (Users.length > 0) {
-        var lastID = Users[Users.length - 1]['id']
-    } else {
-        var lastID = 0
-    }
-    var id = Number(lastID) + 1
-    item['id'] = id
-    Users.push(item)
-    this.updateDB(Users)
-    return id
-}
-
-UserDB.prototype.get = function (email) {
-    var Users = this.all()
-
-    for (var i = 0; i < Users.length; i++) {
-        if (Users[i].email == email) {
-            return Users[i]
-        }
-    }
-}
-
-function LoggedDB() {
-    this.db = localStorage
-
-    this.init = function () {
-        var res = localStorage.getItem('Logged')
+        var res = localStorage.getItem(name)
         if (!res) {
             this.updateDB({})
         }
     }
 
     this.updateDB = function (data) {
-        this.db.setItem('Logged', JSON.stringify(data))
+        this.db.setItem(name, JSON.stringify(data))
     }
 }
 
-LoggedDB.prototype.get = function () {
+SingleDB.prototype.get = function () {
     this.init()
-    return JSON.parse(this.db.getItem('Logged'))
+    return JSON.parse(this.db.getItem(this.name))
 }
 
-LoggedDB.prototype.create = function (item) {
+SingleDB.prototype.create = function (item) {
     this.init()
     this.updateDB(item)
 }
 
-LoggedDB.prototype.delete = function () {
+SingleDB.prototype.delete = function () {
     this.init()
     this.updateDB({})
 }
 
 
-var Restaurent = new RestaurentDB()
-var User = new UserDB()
-var Logged = new LoggedDB()
+var Restaurent = new DB('Restaurent')
+var User = new DB('Users')
+var Logged = new SingleDB('Logged')
+var Cart = new SingleDB('Cart')
 
 function isAdmin() {
     var user = Logged.get()
@@ -167,7 +139,7 @@ function renderNavAtoUser() {
         target.innerHTML = ""
 
         a.href = "#"
-        a.innerText = user.email.split('@')[0]
+        a.innerText = 'Hi! ' + user.email.split('@')[0]
         a.className = "text-white text-decoration-none mr-4"
 
         a2.href = 'logout.html'
